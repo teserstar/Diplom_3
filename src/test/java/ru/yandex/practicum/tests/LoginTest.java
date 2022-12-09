@@ -1,26 +1,14 @@
 package ru.yandex.practicum.tests;
 
 import io.qameta.allure.Description;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import ru.yandex.practicum.pages.ForgotPasswordPage;
-import ru.yandex.practicum.pages.LoginPage;
-import ru.yandex.practicum.pages.MainPage;
-import ru.yandex.practicum.pages.RegisterPage;
+import stellarburgers.pageobjects.ForgotPasswordPage;
+import stellarburgers.pageobjects.LoginPage;
+import stellarburgers.pageobjects.MainPage;
+import stellarburgers.pageobjects.RegisterPage;
 
-public class LoginTest {
-    private WebDriver driver;
-
-    @Before
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments();
-        driver = new ChromeDriver(options);
-    }
+public class LoginTest extends BaseTest {
 
     // Авторизация через форму "Вход"
     public void login(String email, String password) {
@@ -44,7 +32,11 @@ public class LoginTest {
 
         mainPage.clickLoginToAccountButton();
         login(USER_EMAIL, USER_PASSWORD);
-        mainPage.checkVisibilityCreateOrderButton();
+        mainPage.waitCreateOrderButton();
+
+        // Проверка видимости кнопки 'Оформить заказ' после авторизации
+        Assert.assertTrue("Кнопка 'Оформить заказ' должна быть видна на странице",
+                driver.findElement(mainPage.getCreateOrderButton()).isDisplayed());
     }
 
     @Test
@@ -57,7 +49,11 @@ public class LoginTest {
 
         mainPage.clickPersonalAccountButton();
         login(USER_EMAIL, USER_PASSWORD);
-        mainPage.checkVisibilityCreateOrderButton();
+        mainPage.waitCreateOrderButton();
+
+        // Проверка видимости кнопки 'Оформить заказ' после авторизации
+        Assert.assertTrue("Кнопка 'Оформить заказ' должна быть видна на странице",
+                driver.findElement(mainPage.getCreateOrderButton()).isDisplayed());
     }
 
     @Test
@@ -71,7 +67,11 @@ public class LoginTest {
 
         registerPage.clickLoginButton();
         login(USER_EMAIL, USER_PASSWORD);
-        mainPage.checkVisibilityCreateOrderButton();
+        mainPage.waitCreateOrderButton();
+
+        // Проверка видимости кнопки 'Оформить заказ' после авторизации
+        Assert.assertTrue("Кнопка 'Оформить заказ' должна быть видна на странице",
+                driver.findElement(mainPage.getCreateOrderButton()).isDisplayed());
     }
 
     @Test
@@ -85,11 +85,10 @@ public class LoginTest {
 
         forgotPasswordPage.clickLoginButton();
         login(USER_EMAIL, USER_PASSWORD);
-        mainPage.checkVisibilityCreateOrderButton();
-    }
+        mainPage.waitCreateOrderButton();
 
-    @After
-    public void tearDown() {
-        driver.quit();
+        // Проверка видимости кнопки 'Оформить заказ' после авторизации
+        Assert.assertTrue("Кнопка 'Оформить заказ' должна быть видна на странице",
+                driver.findElement(mainPage.getCreateOrderButton()).isDisplayed());
     }
 }

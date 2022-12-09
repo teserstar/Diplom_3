@@ -2,24 +2,12 @@ package ru.yandex.practicum.tests;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import ru.yandex.practicum.pages.LoginPage;
-import ru.yandex.practicum.pages.RegisterPage;
+import stellarburgers.pageobjects.LoginPage;
+import stellarburgers.pageobjects.RegisterPage;
 
-public class RegisterTest {
-    private WebDriver driver;
-
-    @Before
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments();
-        driver = new ChromeDriver(options);
-    }
+public class RegisterTest extends BaseTest {
 
     private String randomString = RandomStringUtils.randomAlphanumeric(6);
 
@@ -36,7 +24,11 @@ public class RegisterTest {
                 .fillInEmailInput("user_" + randomString + "@yandex.ru")
                 .fillInPasswordInput("user_" + randomString)
                 .clickRegisterButton();
-        loginPage.checkVisibilityLoginForm();
+        loginPage.waitLoginForm();
+
+        //Проверка видимости формы 'Вход'
+        Assert.assertTrue("Форма 'Вход' должна быть видна на странице",
+                driver.findElement(loginPage.getLoginForm()).isDisplayed());
     }
 
     @Test
@@ -50,11 +42,10 @@ public class RegisterTest {
                 .fillInEmailInput("user_" + randomString + "@yandex.ru")
                 .fillInPasswordInput("12345")
                 .clickRegisterButton()
-                .checkVisibilityIncorrectPasswordMessage();
-    }
+                .waitIncorrectPasswordMessage();
 
-    @After
-    public void tearDown() {
-        driver.quit();
+        // Проверка видимости сообщения об ошибке 'Некорректный пароль'
+        Assert.assertTrue("Сообщение об ошибке 'Некорректный пароль' должно быть видно на странице",
+                driver.findElement(registerPage.getIncorrectPasswordMessage()).isDisplayed());
     }
 }

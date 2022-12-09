@@ -1,6 +1,6 @@
-package ru.yandex.practicum.pages;
+package stellarburgers.pageobjects;
 
-import org.junit.Assert;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +19,10 @@ public class MainPage {
     // Кнопка "Оформить заказ"
     private By createOrderButton = By.xpath(".//button[text()='Оформить заказ']");
 
+    public By getCreateOrderButton() {
+        return createOrderButton;
+    }
+
     // Кнопка "Личный Кабинет"
     private By personalAccountButton = By.xpath(".//p[text()='Личный Кабинет']/..");
 
@@ -34,13 +38,25 @@ public class MainPage {
     // Название раздела "Булки" в списке элементов
     private By bunsTitle = By.xpath(".//h2[text()='Булки']");
 
+    public By getBunsTitle() {
+        return bunsTitle;
+    }
+
     // Название раздела "Соусы" в списке элементов
     private By saucesTitle = By.xpath(".//h2[text()='Соусы']");
+
+    public By getSaucesTitle() {
+        return saucesTitle;
+    }
 
     // Название раздела "Начинки" в списке элементов
     private By fillingsTitle = By.xpath(".//h2[text()='Начинки']");
 
-    // Нажатие кнопки "Войти в аккаунт" на главной странице
+    public By getFillingsTitle() {
+        return fillingsTitle;
+    }
+
+    @Step("Нажатие кнопки 'Войти в аккаунт' на главной странице")
     public MainPage clickLoginToAccountButton() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(loginToAccountButton));
@@ -48,21 +64,19 @@ public class MainPage {
         return this;
     }
 
-    // Нажатие кнопки "Личный Кабинет" на главной странице
+    @Step("Нажатие кнопки 'Личный Кабинет' на главной странице")
     public MainPage clickPersonalAccountButton() {
         driver.findElement(personalAccountButton).click();
         return this;
     }
 
-    // Проверка видимости кнопки "Оформить заказ" после авторизации
-    public void checkVisibilityCreateOrderButton() {
+    @Step("Ожидание наличия кнопки 'Оформить заказ' после авторизации на странице")
+    public void waitCreateOrderButton() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(createOrderButton));
-        Assert.assertTrue("Кнопка 'Оформить заказ' должна быть видна на странице",
-                driver.findElement(createOrderButton).isDisplayed());
     }
 
-    // Нажатие на раздел "Булки"
+    @Step("Нажатие на раздел 'Булки'")
     public MainPage clickBunsTab() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(bunsTab));
@@ -70,6 +84,7 @@ public class MainPage {
         return this;
     }
 
+    @Step("Нажатие на раздел 'Соусы'")
     public MainPage clickSaucesTab() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(saucesTab));
@@ -77,6 +92,7 @@ public class MainPage {
         return this;
     }
 
+    @Step("Нажатие на раздел 'Начинки'")
     public MainPage clickFillingsTab() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(fillingsTab));
@@ -84,27 +100,21 @@ public class MainPage {
         return this;
     }
 
-    // Проверка видимости раздела "Булки" для выбора элементов
-    public void checkVisibilityBuns() {
+    @Step("Ожидание наличия раздела 'Булки' для выбора элементов")
+    public void waitBuns() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(bunsTitle));
-        Assert.assertTrue("Раздел 'Булки' должен быть виден на странице для выбора элементов",
-                driver.findElement(bunsTitle).isDisplayed());
     }
 
-    // Проверка видимости раздела "Соусы" для выбора элементов
-    public void checkVisibilitySauces() {
+    @Step("Проверка видимости раздела 'Соусы' для выбора элементов")
+    public void waitSauces() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(saucesTitle));
-        Assert.assertTrue("Раздел 'Соусы' должен быть виден на странице для выбора элементов",
-                driver.findElement(saucesTitle).isDisplayed());
     }
 
-    // Проверка видимости раздела "Начинки" для выбора элементов
-    public void checkVisibilityFillings() {
+    @Step("Проверка видимости раздела 'Начинки' для выбора элементов")
+    public void waitFillings() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(fillingsTitle));
-        Assert.assertTrue("Раздел 'Начинки' должен быть виден на странице для выбора элементов",
-                driver.findElement(fillingsTitle).isDisplayed());
     }
 }

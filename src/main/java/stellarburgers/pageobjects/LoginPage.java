@@ -1,6 +1,6 @@
-package ru.yandex.practicum.pages;
+package stellarburgers.pageobjects;
 
-import org.junit.Assert;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,6 +16,10 @@ public class LoginPage {
     // Форма "Вход"
     private By loginForm = By.xpath(".//h2[text()='Вход']/..");
 
+    public By getLoginForm() {
+        return loginForm;
+    }
+
     // Поле ввода "Email"
     private By emailInput = By.xpath(".//label[text()='Email']//ancestor::div/input");
 
@@ -25,15 +29,13 @@ public class LoginPage {
     // Кнопка "Войти"
     private By loginButton = By.xpath(".//button[text()='Войти']");
 
-    // Проверка видимости формы "Вход"
-    public void checkVisibilityLoginForm() {
+    @Step("Ожидание наличия формы 'Вход' на странице")
+    public void waitLoginForm() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(loginForm));
-        Assert.assertTrue("Форма 'Вход' должна быть видна на странице",
-                driver.findElement(loginForm).isDisplayed());
     }
 
-    // Заполнение поля "Email" на форме "Вход"
+    @Step("Заполнение поля 'Email' на форме 'Вход'")
     public LoginPage fillInEmailInput(String email) {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(emailInput));
@@ -41,13 +43,13 @@ public class LoginPage {
         return this;
     }
 
-    // Заполнение поля "Пароль" на форме "Вход"
+    @Step("Заполнение поля 'Пароль' на форме 'Вход'")
     public LoginPage fillInPasswordInput(String password) {
         driver.findElement(passwordInput).sendKeys(password);
         return this;
     }
 
-    // Нажатие кнопки "Войти" на форме "Вход"
+    @Step("Нажатие кнопки 'Войти' на форме 'Вход'")
     public LoginPage clickLoginButton() {
         driver.findElement(loginButton).click();
         return this;

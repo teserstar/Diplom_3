@@ -1,6 +1,6 @@
-package ru.yandex.practicum.pages;
+package stellarburgers.pageobjects;
 
-import org.junit.Assert;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,10 +28,14 @@ public class RegisterPage {
     // Сообщение об ошибке "Некорректный пароль"
     private By incorrectPasswordMessage = By.xpath(".//p[text()='Некорректный пароль']");
 
+    public By getIncorrectPasswordMessage() {
+        return incorrectPasswordMessage;
+    }
+
     // Кнопка "Войти"
     private By loginButton = By.xpath(".//a[text()='Войти']");
 
-    // Заполнение поля "Имя" на форме "Регистрация"
+    @Step("Заполнение поля 'Имя' на форме 'Регистрация'")
     public RegisterPage fillInNameInput(String name) {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(nameInput));
@@ -39,35 +43,33 @@ public class RegisterPage {
         return this;
     }
 
-    // Заполнение поля "Email" на форме "Регистрация"
+    @Step("Заполнение поля 'Email' на форме 'Регистрация'")
     public RegisterPage fillInEmailInput(String email) {
         driver.findElement(emailInput).sendKeys(email);
         return this;
     }
 
-    // Заполнение поля "Пароль" на форме "Регистрация"
+    @Step("Заполнение поля 'Пароль' на форме 'Регистрация'")
     public RegisterPage fillInPasswordInput(String password) {
         driver.findElement(passwordInput).sendKeys(password);
         return this;
     }
 
-    // Нажатие кнопки "Зарегистрироваться" на форме "Регистрация"
+    @Step("Нажатие кнопки 'Зарегистрироваться' на форме 'Регистрация'")
     public RegisterPage clickRegisterButton() {
         driver.findElement(registerButton).click();
         return this;
     }
 
-    // Нажатие кнопки "Войти" на форме "Регистрация"
+    @Step("Нажатие кнопки 'Войти' на форме 'Регистрация'")
     public RegisterPage clickLoginButton() {
         driver.findElement(loginButton).click();
         return this;
     }
 
-    // Проверка видимости сообщения об ошибке "Некорректный пароль"
-    public void checkVisibilityIncorrectPasswordMessage() {
+    @Step("Ожидание наличия сообщения об ошибке 'Некорректный пароль'")
+    public void waitIncorrectPasswordMessage() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(incorrectPasswordMessage));
-        Assert.assertTrue("Сообщение об ошибке 'Некорректный пароль' должно быть видно на странице",
-                driver.findElement(incorrectPasswordMessage).isDisplayed());
     }
 }

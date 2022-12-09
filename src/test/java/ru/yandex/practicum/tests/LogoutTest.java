@@ -1,26 +1,13 @@
 package ru.yandex.practicum.tests;
 
 import io.qameta.allure.Description;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import ru.yandex.practicum.pages.AccountPage;
-import ru.yandex.practicum.pages.LoginPage;
-import ru.yandex.practicum.pages.MainPage;
+import stellarburgers.pageobjects.AccountPage;
+import stellarburgers.pageobjects.LoginPage;
+import stellarburgers.pageobjects.MainPage;
 
-public class LogoutTest {
-    private WebDriver driver;
-
-    @Before
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments();
-        driver = new ChromeDriver(options);
-
-    }
+public class LogoutTest extends  BaseTest {
 
     // Авторизация через форму "Вход"
     public void login(String email, String password) {
@@ -47,11 +34,10 @@ public class LogoutTest {
         login(USER_EMAIL, USER_PASSWORD);
         mainPage.clickPersonalAccountButton();
         accountPage.clickLogoutButton();
-        loginPage.checkVisibilityLoginForm();
-    }
+        loginPage.waitLoginForm();
 
-    @After
-    public void tearDown() {
-        driver.quit();
+        //Проверка видимости формы 'Вход'
+        Assert.assertTrue("Форма 'Вход' должна быть видна на странице",
+                driver.findElement(loginPage.getLoginForm()).isDisplayed());
     }
 }

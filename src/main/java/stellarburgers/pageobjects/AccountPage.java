@@ -1,6 +1,6 @@
-package ru.yandex.practicum.pages;
+package stellarburgers.pageobjects;
 
-import org.junit.Assert;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,6 +16,10 @@ public class AccountPage {
     // Поле с логином аккаунта
     private By accountLoginField = By.xpath(".//label[text()='Логин']/..");
 
+    public By getAccountLoginField() {
+        return accountLoginField;
+    }
+
     // Кнопка "Конструктор"
     private By constructorButton = By.xpath(".//p[text()='Конструктор']/..");
 
@@ -25,15 +29,13 @@ public class AccountPage {
     // Кнопка "Выход"
     private By logoutButton = By.xpath(".//button[text()='Выход']");
 
-    // Проверка видимости кнопки поля с логином аккаунта
-    public void checkVisibilityAccountLoginField() {
+    @Step("Ожидание наличия поля с логином аккаунта")
+    public void waitAccountLoginField() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(accountLoginField));
-        Assert.assertTrue("Поле 'Логин' должно быть видно на странице",
-                driver.findElement(accountLoginField).isDisplayed());
     }
 
-    // Нажатие кнопки "Конструктор" в личном кабинете
+    @Step("Нажатие кнопки 'Конструктор' в личном кабинете")
     public AccountPage clickConstructorButton() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(constructorButton));
@@ -41,7 +43,7 @@ public class AccountPage {
         return this;
     }
 
-    // Нажатие на логотип в личном кабинете
+    @Step("Нажатие на логотип в личном кабинете")
     public AccountPage clickLogoButton() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(logoButton));
@@ -49,7 +51,7 @@ public class AccountPage {
         return this;
     }
 
-    // Нажатие кнопки "Выход" в личном кабинете
+    @Step("Нажатие кнопки 'Выход' в личном кабинете")
     public AccountPage clickLogoutButton() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(logoutButton));

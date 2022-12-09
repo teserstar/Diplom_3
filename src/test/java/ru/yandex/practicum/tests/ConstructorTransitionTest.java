@@ -1,23 +1,11 @@
 package ru.yandex.practicum.tests;
 
 import io.qameta.allure.Description;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import ru.yandex.practicum.pages.MainPage;
+import stellarburgers.pageobjects.MainPage;
 
-public class ConstructorTransitionTest {
-    private WebDriver driver;
-
-    @Before
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments();
-        driver = new ChromeDriver(options);
-    }
+public class ConstructorTransitionTest extends BaseTest {
 
     @Test
     @Description("Тест для проверки перехода к разделу «Начинки»")
@@ -28,7 +16,11 @@ public class ConstructorTransitionTest {
         MainPage mainPage = new MainPage(driver);
 
         mainPage.clickFillingsTab()
-                .checkVisibilityFillings();
+                .waitFillings();
+
+        // Проверка видимости раздела 'Начинки' для выбора элементов
+        Assert.assertTrue("Раздел 'Начинки' должен быть виден на странице для выбора элементов",
+                driver.findElement(mainPage.getFillingsTitle()).isDisplayed());
     }
 
     @Test
@@ -41,7 +33,11 @@ public class ConstructorTransitionTest {
 
         mainPage.clickFillingsTab()
                 .clickSaucesTab()
-                .checkVisibilitySauces();
+                .waitSauces();
+
+        // Проверка видимости раздела 'Соусы' для выбора элементов
+        Assert.assertTrue("Раздел 'Соусы' должен быть виден на странице для выбора элементов",
+                driver.findElement(mainPage.getSaucesTitle()).isDisplayed());
     }
 
     @Test
@@ -54,11 +50,10 @@ public class ConstructorTransitionTest {
 
         mainPage.clickFillingsTab()
                 .clickBunsTab()
-                .checkVisibilityBuns();
-    }
+                .waitBuns();
 
-    @After
-    public void tearDown() {
-        driver.quit();
+        // Проверка видимости раздела 'Булки' для выбора элементов
+        Assert.assertTrue("Раздел 'Булки' должен быть виден на странице для выбора элементов",
+                driver.findElement(mainPage.getBunsTitle()).isDisplayed());
     }
 }
